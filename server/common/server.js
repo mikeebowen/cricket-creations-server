@@ -40,7 +40,6 @@ export default class ExpressServer {
       l.error(e);
       exit(1);
     });
-
     return app;
   }
 }

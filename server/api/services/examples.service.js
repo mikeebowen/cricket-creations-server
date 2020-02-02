@@ -1,10 +1,12 @@
 import l from '../../common/logger';
 import db from './examples.db.service';
+import db2 from '../../models';
 
 class ExamplesService {
   all() {
     l.info(`${this.constructor.name}.all()`);
-    return db.all();
+    // return db.all();
+    return Promise.resolve(db2.BlogPost.findAll());
   }
 
   byId(id) {

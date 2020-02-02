@@ -1,15 +1,20 @@
+/* eslint-disable class-methods-use-this */
 import ExamplesService from '../../services/examples.service';
 
 export class Controller {
   exampleService = ExamplesService;
 
-  all(req, res) {
-    this.exampleService.all()
-      .then(r => res.json(r));
+  async all(req, res) {
+    try {
+      const r = await ExamplesService.all();
+      res.json(r);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   byId(req, res) {
-    this.exampleService
+    ExamplesService
       .byId(req.params.id)
       .then(r => {
         if (r) res.json(r);
@@ -18,7 +23,7 @@ export class Controller {
   }
 
   create(req, res) {
-    this.exampleService
+    ExamplesService
       .create(req.body.name)
       .then(r => res
         .status(201)
