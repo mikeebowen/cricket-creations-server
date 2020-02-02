@@ -1,10 +1,10 @@
-import * as path from 'path';
+import {join} from 'path';
 import express, { Application } from 'express';
 import errorHandler from '../api/middlewares/error.handler';
 import { OpenApiValidator } from 'express-openapi-validator';
 
 export default function (app: Application, routes: (app: Application) => void): Promise<void> {
-  const apiSpec = path.join(__dirname, 'api.yml');
+  const apiSpec = join(__dirname, 'api.yml');
   const validateResponses = !!(
     process.env.OPENAPI_ENABLE_RESPONSE_VALIDATION &&
     process.env.OPENAPI_ENABLE_RESPONSE_VALIDATION.toLowerCase() === 'true'
