@@ -1,15 +1,20 @@
 module.exports = {
-  parser: '@typescript-eslint/parser', // Specifies the ESLint parser
+  parser: 'babel-eslint', // Specifies the ESLint parser
   extends: [
-    'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
-    'prettier/@typescript-eslint', // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
-    // 'plugin:prettier/recommended', // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+    'airbnb-base',
   ],
   parserOptions: {
     ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
     sourceType: 'module', // Allows for the use of imports
+    allowImportExportEverywhere: false,
+  },
+  env: {
+    mocha: true,
   },
   rules: {
+    'arrow-parens': ['error', 'as-needed', {
+        'requireForBlockBody': false
+      }],
     'array-bracket-newline': ['error', 'consistent'],
     'comma-dangle': ['warn', 'always-multiline'],
     'eol-last': ['error', 'always'],
@@ -52,8 +57,33 @@ module.exports = {
     'object-property-newline': ['error', {allowAllPropertiesOnSameLine: true}],
     'object-shorthand': ['error', 'always'],
     'prefer-const': ['error', {destructuring: 'any', ignoreReadBeforeAssign: false}],
-    quotes: ['error', 'single'],
-    semi: ['error', 'always'],
     strict: 2,
   },
 };
+
+// {
+//   "parser": "babel-eslint",
+//   "extends": "airbnb-base",
+//   "parserOptions": {
+//     "sourceType": "module",
+//     "allowImportExportEverywhere": false
+//   },
+//   "env": {
+//     "mocha": true
+//   },
+//   "parserOptions": {
+//     "sourceType": "module"
+//   },
+//   "rules": {
+//     "no-underscore-dangle": 0,
+//     "class-methods-use-this": ["off"],
+//     "no-use-before-define": ["error", { 
+//       "functions": false, 
+//       "classes": false 
+//     }],
+//     "node/no-unpublished-import": ["off"],
+//     "arrow-parens": ["error", "as-needed", {
+//       "requireForBlockBody": false
+//     }]
+//   }
+// }
