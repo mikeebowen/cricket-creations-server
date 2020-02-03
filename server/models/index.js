@@ -1,11 +1,13 @@
 
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
+import {readdirSync, existsSync, mkdir} from 'fs';
+import {basename, join} from 'path';
+import {Sequelize} from 'sequelize';
+import l from '../common/logger';
 
-const basename = path.basename(__filename);
+const bn = basename(__filename);
 const env = process.env.NODE_ENV || 'development';
+// eslint-disable-next-line import/no-dynamic-require
 const config = require(`${__dirname}/../config/config.json`)[env];
 const db = {};
 
@@ -16,11 +18,10 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-fs
-  .readdirSync(__dirname)
-  .filter(file => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
+readdirSync(__dirname)
+  .filter(file => (file.indexOf('.') !== 0) && (file !== bn) && (file.slice(-3) === '.js'))
   .forEach(file => {
-    const model = sequelize.import(path.join(__dirname, file));
+    const model = sequelize.import(join(__dirname, file));
     db[model.name] = model;
   });
 
@@ -29,18 +30,29 @@ Object.keys(db).forEach(modelName => {
     db[modelName].associate(db);
   }
 });
+const startSequelize = (sql, log) => {
+  sql.sync();
+  sql
+    .authenticate()
+    .then(() => {
+      log.info('Connection has been established successfully.');
+    })
+    .catch(error => {
+      log.error(error);
+    });
+};
+const dbDir = join('..', 'db');
+if (!existsSync(dbDir)) {
+  mkdir(dbDir, err => {
+    if (err) l.error(err.message);
+    startSequelize(sequelize, l);
+  });
+} else {
+  startSequelize(sequelize, l);
+}
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-sequelize.sync();
-sequelize
-  .authenticate()
-  .then(err => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.log('Unable to connect to the database:', err);
-  });
 
 module.exports = db;
 export default db;
