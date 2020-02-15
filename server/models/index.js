@@ -8,7 +8,7 @@ import l from '../common/logger';
 const bn = basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 // eslint-disable-next-line import/no-dynamic-require
-const config = require(`${__dirname}/../config/config.json`)[env];
+const config = require(`${__dirname}/../config/config.js`)[env];
 const db = {};
 
 let sequelize;
