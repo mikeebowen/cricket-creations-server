@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: express-server-boilerplate
+  title: cricket-creations-server
   description: Boiplerplate express server
   version: 1.0.0
 servers:

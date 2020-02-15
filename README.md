@@ -1,4 +1,4 @@
-# express-server-boilerplate
+# cricket-creations-server
 
 Boiplerplate express server
 
@@ -106,7 +106,7 @@ npm run lint
 Deploy to CloudFoundry
 
 ```shell
-cf push express-server-boilerplate
+cf push cricket-creations-server
 ```
 
 
