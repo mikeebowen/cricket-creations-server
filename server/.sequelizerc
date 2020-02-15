@@ -1,0 +1,6 @@
+require('@babel/register');
+const {resolve} = require('path');
+
+module.exports = {
+  'config': resolve('config', 'config.js')
+}
