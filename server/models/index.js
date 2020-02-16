@@ -30,26 +30,6 @@ Object.keys(db).forEach(modelName => {
     db[modelName].associate(db);
   }
 });
-const startSequelize = (sql, log) => {
-  sql.sync();
-  sql
-    .authenticate()
-    .then(() => {
-      log.info('Connection has been established successfully.');
-    })
-    .catch(error => {
-      log.error(error);
-    });
-};
-const dbDir = join('..', 'db');
-if (!existsSync(dbDir)) {
-  mkdir(dbDir, err => {
-    if (err) l.error(err.message);
-    startSequelize(sequelize, l);
-  });
-} else {
-  startSequelize(sequelize, l);
-}
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
