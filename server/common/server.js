@@ -1,8 +1,8 @@
 import Express from 'express';
-import * as path from 'path';
-import * as bodyParser from 'body-parser';
-import * as http from 'http';
-import * as os from 'os';
+import {normalize} from 'path';
+import {json, urlencoded, text} from 'body-parser';
+import {createServer} from 'http';
+import {hostname} from 'os';
 import cookieParser from 'cookie-parser';
 
 import oas from './oas';
@@ -14,11 +14,11 @@ const {exit} = process;
 
 export default class ExpressServer {
   constructor() {
-    const root = path.normalize(`${__dirname}/../..`);
+    const root = normalize(`${__dirname}/../..`);
     app.set('appPath', `${root}client`);
-    app.use(bodyParser.json({limit: process.env.REQUEST_LIMIT || '100kb'}));
-    app.use(bodyParser.urlencoded({extended: true, limit: process.env.REQUEST_LIMIT || '100kb'}));
-    app.use(bodyParser.text({limit: process.env.REQUEST_LIMIT || '100kb'}));
+    app.use(json({limit: process.env.REQUEST_LIMIT || '100kb'}));
+    app.use(urlencoded({extended: true, limit: process.env.REQUEST_LIMIT || '100kb'}));
+    app.use(text({limit: process.env.REQUEST_LIMIT || '100kb'}));
     app.use(cookieParser(process.env.SESSION_SECRET));
     app.use(Express.static(`${root}/public`));
   }
@@ -31,11 +31,11 @@ export default class ExpressServer {
   listen(port = process.env.PORT) {
     const welcome = p => () => l.info(
       `up and running in ${process.env.NODE_ENV
-          || 'development'} @: ${os.hostname()} on port: ${p}}`,
+          || 'development'} @: ${hostname()} on port: ${p}}`,
     );
 
     oas(app, this.routes).then(() => {
-      http.createServer(app).listen(port, welcome(port));
+      createServer(app).listen(port, welcome(port));
     }).catch(e => {
       l.error(e);
       exit(1);

@@ -1,9 +1,8 @@
 
 
-import {readdirSync, existsSync, mkdir} from 'fs';
+import {readdirSync} from 'fs';
 import {basename, join} from 'path';
 import {Sequelize} from 'sequelize';
-import l from '../../common/logger';
 
 const bn = basename(__filename);
 const env = process.env.NODE_ENV || 'development';
