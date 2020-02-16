@@ -1,6 +1,6 @@
 import l from '../../common/logger';
 import db from './examples.db.service';
-import db2 from '../../models';
+import db2 from '../../db/models';
 
 class ExamplesService {
   all() {
