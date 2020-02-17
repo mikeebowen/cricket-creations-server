@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     content: DataTypes.TEXT,
   }, {});
   BlogPost.associate = function (models) {
-    // associations can be defined here
+    BlogPost.belongsTo(models.User, {foreignKey: {allowNull: false}});
   };
   return BlogPost;
 };
