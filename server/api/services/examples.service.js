@@ -5,8 +5,8 @@ import db2 from '../../db/models';
 class ExamplesService {
   all() {
     l.info(`${this.constructor.name}.all()`);
-    // return db.all();
-    return Promise.resolve(db2.BlogPost.findAll());
+    return db.all();
+    // return Promise.resolve(db2.BlogPost.findAll());
   }
 
   byId(id) {

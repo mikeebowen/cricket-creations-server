@@ -1,12 +1,58 @@
+import bcrypt from 'bcrypt';
+
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING,
-    Username: DataTypes.STRING,
-    password: DataTypes.STRING,
-  }, {});
-  User.associate = function (models) {
+  const User = sequelize.define('User',
+    {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      firstName: {
+        type: DataTypes.STRING,
+      },
+      lastName: {
+        type: DataTypes.STRING,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+    },
+    {
+      hooks: {
+        async beforeCreate(user) {
+          const salt = await bcrypt.genSalt(10);
+          // eslint-disable-next-line no-param-reassign
+          user.password = await bcrypt.hash(user.password, salt);
+        },
+      },
+      instanceMethods: {
+        async validPassword(password) {
+          return bcrypt.compare(password, this.password);
+        },
+      },
+    });
+  User.associate = models => {
     User.hasMany(models.BlogPost);
   };
   return User;
