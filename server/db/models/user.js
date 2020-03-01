@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
+        isEmail: true,
       },
       username: {
         type: DataTypes.STRING,
@@ -46,14 +47,12 @@ module.exports = (sequelize, DataTypes) => {
           user.password = await bcrypt.hash(user.password, salt);
         },
       },
-      instanceMethods: {
-        async validPassword(password) {
-          return bcrypt.compare(password, this.password);
-        },
-      },
     });
   User.associate = models => {
     User.hasMany(models.BlogPost);
+  };
+  User.prototype.validPassword = async function validPassword(password) {
+    return bcrypt.compare(password, this.password);
   };
   return User;
 };

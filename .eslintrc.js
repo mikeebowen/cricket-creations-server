@@ -58,6 +58,7 @@ module.exports = {
     'object-shorthand': ['error', 'always'],
     'prefer-const': ['error', {destructuring: 'any', ignoreReadBeforeAssign: false}],
     strict: 2,
+    'consistent-return': ['error', {treatUndefinedAsUnspecified: true}],
   },
 };
 

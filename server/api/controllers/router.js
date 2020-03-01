@@ -1,12 +1,10 @@
 import {Router} from 'express';
-import blogPostRouter from './blogPost/blogPostRouter';
-import exampleRouter from './examples/router';
-import userRouter from './user/userRouter';
+import blogPostRouter from './blog-posts/blog-post.router';
+import userRouter from './users/users.router';
 
 const router = Router();
 
 router.use('/blogposts', blogPostRouter);
-router.use('/examples', exampleRouter);
 router.use('/users', userRouter);
 
 export default router;

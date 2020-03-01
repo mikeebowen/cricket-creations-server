@@ -14,9 +14,9 @@ export default class ExpressServer {
   constructor() {
     const root = normalize(`${__dirname}/../..`);
     app.set('appPath', `${root}client`);
-    app.use(json({limit: REQUEST_LIMIT || '100kb'}));
-    app.use(urlencoded({extended: true, limit: REQUEST_LIMIT || '100kb'}));
-    app.use(text({limit: REQUEST_LIMIT || '100kb'}));
+    app.use(json({limit: REQUEST_LIMIT ?? '100kb'}));
+    app.use(urlencoded({extended: true, limit: REQUEST_LIMIT ?? '100kb'}));
+    app.use(text({limit: REQUEST_LIMIT ?? '100kb'}));
     app.use(cookieParser(SESSION_SECRET));
   }
 

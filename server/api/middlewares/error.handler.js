@@ -3,6 +3,6 @@ import l from '../../common/logger';
 export default function errorHandler(err, req, res, next) {
   l.error(err);
   const errors = err.errors || [{message: err.message}];
-  res.status(err.status || 500).json({errors});
+  res.status(err.status || 500).json(errors);
 }
 

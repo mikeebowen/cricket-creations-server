@@ -7,9 +7,17 @@ export default class DatabaseService {
     this.model = model;
   }
 
-  async all() {
+  async all(options) {
     try {
-      return await db[this.model].findAll();
+      return await db[this.model].findAll(options);
+    } catch (err) {
+      return err;
+    }
+  }
+
+  async one(options) {
+    try {
+      return await db[this.model].findOne(options);
     } catch (err) {
       return err;
     }
@@ -21,5 +29,9 @@ export default class DatabaseService {
     } catch (err) {
       return err;
     }
+  }
+
+  getQuery() {
+
   }
 }
