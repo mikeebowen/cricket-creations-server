@@ -1,11 +1,11 @@
 import {Router} from 'express';
 import BlogPostController from './blog-post.controller';
-
+import validateToken from '../../middlewares/validate.token';
 
 const router = Router();
 
-const blogPostController = new BlogPostController();
 router.route('/')
-  .get((...args) => blogPostController.all(...args));
+  .get(BlogPostController.all)
+  .post(validateToken, BlogPostController.create);
 
 export default router;

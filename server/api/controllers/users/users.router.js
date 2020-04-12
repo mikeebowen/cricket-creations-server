@@ -6,10 +6,10 @@ const router = Router();
 
 
 router.route('/')
-  .get(validateToken, (...args) => UserController.all(...args))
-  .post((...args) => UserController.create(...args));
+  .get(validateToken, UserController.all)
+  .post(UserController.create);
 
 router.route('/login')
-  .post((...args) => UserController.login(...args));
+  .post(UserController.login);
 
 export default router;

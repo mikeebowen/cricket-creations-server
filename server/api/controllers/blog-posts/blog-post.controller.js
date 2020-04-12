@@ -1,14 +1,18 @@
-import DatabaseService from '../../services/database.service';
+import BlogPostService from '../../services/blog-post.service';
 
 export default class BlogPostController {
-  blogPostService = new DatabaseService('BlogPost');
-
-  data = []
-
-  async all(req, res, next) {
+  static async all(req, res, next) {
     try {
-      const data = await this.blogPostService.all();
-      // res.json(this.data);
+      const data = await BlogPostService.all();
+      res.json(data);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async create(req, res, next) {
+    try {
+      const data = await BlogPostService.create(req.body);
       res.json(data);
     } catch (err) {
       next(err);
